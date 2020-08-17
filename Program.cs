@@ -25,11 +25,11 @@ namespace ExerciseApp2
             Console.Clear();
             Console.WriteLine("Select Exercise to run:");
             Console.WriteLine("-----------------------");
-            Console.WriteLine("A) Exercise 2A1");
-            Console.WriteLine("B) Exercise 2A2");
-            Console.WriteLine("C) Exercise 2A3");
-            Console.WriteLine("D) Exercise 2B1");
-            Console.WriteLine("F) Exercise 2B2");
+            Console.WriteLine("A) Exercise 2A1 (Generics Math)");
+            Console.WriteLine("B) Exercise 2A2 (StringExtension)");
+            Console.WriteLine("C) Exercise 2A3 (LINQ Stuffs)");
+            Console.WriteLine("D) Exercise 2B1 (Users)");
+            Console.WriteLine("F) Exercise 2B2 (Animals");
             Console.WriteLine("---------------");
             Console.WriteLine("Q/E) Exit Program");
 
