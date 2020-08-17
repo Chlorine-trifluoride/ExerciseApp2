@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using ExerciseApp2.Exercises;
 
 namespace ExerciseApp2
@@ -9,6 +12,33 @@ namespace ExerciseApp2
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Select Menu load method");
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("A) Load all exercises automatically using AppDomain");
+            Console.WriteLine("B) Load a custom menu with descriptions");
+
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.A:
+                    LoadUsingAppDomain();
+                    break;
+
+                case ConsoleKey.B:
+                    LoadCustomMenu();
+                    break;
+
+                case ConsoleKey.Q:
+                case ConsoleKey.E:
+                    return;
+
+                default:
+                    break;
+                    
+            }
+        }
+
+        static void LoadCustomMenu()
+        {
             while (!exit)
                 PrintMainMenu();
         }
@@ -18,6 +48,43 @@ namespace ExerciseApp2
             Console.Clear();
             new T().Run();
             Console.ReadKey();
+        }
+
+        static void LoadUsingAppDomain()
+        {
+            var type = typeof(IExercise);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                        .SelectMany(s => s.GetTypes())
+                        .Where(p => type.IsAssignableFrom(p) && p.IsClass);
+
+            while (!exit)
+                PrintLoadedMainMenu(types);
+        }
+
+        static void PrintLoadedMainMenu(IEnumerable<Type> exercises)
+        {
+            Console.Clear();
+            Console.WriteLine("Select Exercise to run:");
+            Console.WriteLine("-----------------------");
+
+            Type[] exerArray = exercises.ToArray();
+
+            for (int i = 0; i < exercises.Count(); i++)
+            {
+                Console.WriteLine($"{i}) {exerArray[i].Name}");
+            }
+
+            char key = Console.ReadKey(true).KeyChar;
+            int selection;
+
+            if (int.TryParse(key.ToString(), out selection))
+            {
+                IExercise selectedExer = Activator.CreateInstance(exerArray[selection]) as IExercise;
+                selectedExer.Run();
+
+                // Stop returning instantly
+                Console.ReadKey();
+            }
         }
 
         static void PrintMainMenu()
