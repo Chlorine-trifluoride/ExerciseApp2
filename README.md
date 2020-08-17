@@ -1,6 +1,6 @@
 # ExerciseApp2
 
-Mainly a showcase for building a menu of items that implement IExercise interface with
+Mainly a showcase for automatically building a menu of items that implement IExercise interface with
 
 ```cs
 AppDomain.CurrentDomain.GetAssemblies()
