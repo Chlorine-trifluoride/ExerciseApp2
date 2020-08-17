@@ -8,5 +8,6 @@ namespace ExerciseApp2
     {
         public const string TEST_STRING = "The quick brown fox jumps over a lazy dog";
         public const string SALT = "dGhpcyBpcyBhIHNhbHQgd2UgYXJlIGdvaW5nIHRvIHVzZQ==";
+        public const string DB_PATH = "db.json";
     }
 }

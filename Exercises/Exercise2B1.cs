@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ExerciseApp2.Exercises
 {
@@ -14,6 +15,11 @@ namespace ExerciseApp2.Exercises
 
         public void Run()
         {
+            User.AddUser("test", "test");
+            User.AddUser("test2", "test2");
+            User.SaveAllUsersToFile();
+            User.LoadAllUsersFromFile();
+
             while (!quit)
                 DisplayMenu();
         }
@@ -97,7 +103,7 @@ namespace ExerciseApp2.Exercises
 
         private void ListAllUsers()
         {
-            foreach (User user in User.users)
+            foreach (User user in User.Users)
             {
                 Console.WriteLine($"{user.UserName}:{user.PasswordHash}");
             }
@@ -150,9 +156,17 @@ namespace ExerciseApp2.Exercises
 
         internal class User
         {
-            public static List<User> users = new List<User>();
-            public string UserName { get; }
-            public string PasswordHash { get; }
+            [JsonPropertyName("users")]
+            public static List<User> Users { get; set; } = new List<User>();
+            [JsonPropertyName("user")]
+            public string UserName { get; set; }
+            [JsonPropertyName("passhash")]
+            public string PasswordHash { get; set; }
+
+            private User()
+            {
+                // Required for JsonSerializer.Deserialize
+            }
 
             private User(string userName, string password)
             {
@@ -175,12 +189,12 @@ namespace ExerciseApp2.Exercises
 
             public static void AddUser(string userName, string password)
             {
-                users.Add(new User(userName, password));
+                Users.Add(new User(userName, password));
             }
 
             public static bool TryLogin(string username, string password)
             {
-                var userEntry = users.FirstOrDefault(x => x.UserName == username);
+                var userEntry = Users.FirstOrDefault(x => x.UserName == username);
 
                 if (!(userEntry is null))
                 {
@@ -191,6 +205,22 @@ namespace ExerciseApp2.Exercises
                 }
 
                 return false;
+            }
+
+            public static void SaveAllUsersToFile()
+            {
+                using (StreamWriter writer = new StreamWriter(GLOBALS.DB_PATH))
+                {
+                    writer.Write(JsonSerializer.Serialize(Users));
+                }
+            }
+
+            public static void LoadAllUsersFromFile()
+            {
+                using (StreamReader reader = new StreamReader(GLOBALS.DB_PATH))
+                {
+                    Users = JsonSerializer.Deserialize<List<User>>(reader.ReadToEnd());
+                }
             }
         }
     }

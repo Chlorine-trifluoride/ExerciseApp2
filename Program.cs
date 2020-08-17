@@ -29,6 +29,7 @@ namespace ExerciseApp2
             Console.WriteLine("B) Exercise 2A2");
             Console.WriteLine("C) Exercise 2A3");
             Console.WriteLine("D) Exercise 2B1");
+            Console.WriteLine("F) Exercise 2B2");
             Console.WriteLine("---------------");
             Console.WriteLine("Q/E) Exit Program");
 
@@ -50,6 +51,10 @@ namespace ExerciseApp2
 
                 case ConsoleKey.D:
                     RunExercise<Exercise2B1>();
+                    break;
+
+                case ConsoleKey.F:
+                    RunExercise<Exercise2B2>();
                     break;
 
                 case ConsoleKey.Q:
