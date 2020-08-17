@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace ExerciseApp2.Exercises
 {
+    [Description("Sum and Difference")]
     class Exercise2A1 : IExercise
     {
         /*

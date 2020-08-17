@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using ExerciseApp2.Exercises;
@@ -61,6 +62,15 @@ namespace ExerciseApp2
                 PrintLoadedMainMenu(types);
         }
 
+        static string GetDescriptionAttributeText(Type t)
+        {
+            string result = "";
+            DescriptionAttribute descriptionAttribute = (DescriptionAttribute)t.GetCustomAttribute(typeof(DescriptionAttribute));
+            result = descriptionAttribute?.Description;
+
+            return result;
+        }
+
         static void PrintLoadedMainMenu(IEnumerable<Type> exercises)
         {
             Console.Clear();
@@ -71,7 +81,9 @@ namespace ExerciseApp2
 
             for (int i = 0; i < exercises.Count(); i++)
             {
-                Console.WriteLine($"{i}) {exerArray[i].Name}");
+                Type t = exerArray[i];
+
+                Console.WriteLine($"{i}) {t.Name} - {GetDescriptionAttributeText(t)}");
             }
 
             char key = Console.ReadKey(true).KeyChar;
@@ -79,10 +91,13 @@ namespace ExerciseApp2
 
             if (int.TryParse(key.ToString(), out selection))
             {
+                if (selection >= exerArray.Length)
+                    return; // selection out of range
+
                 IExercise selectedExer = Activator.CreateInstance(exerArray[selection]) as IExercise;
                 selectedExer.Run();
 
-                // Stop returning instantly
+                // Stop returning 
                 Console.ReadKey();
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace ExerciseApp2.Exercises
 {
+    [Description("Unique Characters")]
     class Exercise2A3 : IExercise
     {
         public void Run()

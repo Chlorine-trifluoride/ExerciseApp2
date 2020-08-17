@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -9,6 +10,7 @@ using System.Text.Json.Serialization;
 
 namespace ExerciseApp2.Exercises
 {
+    [Description("User Creation/List/Login")]
     class Exercise2B1 : IExercise
     {
         bool quit = false;

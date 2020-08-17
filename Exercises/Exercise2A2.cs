@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace ExerciseApp2.Exercises
@@ -15,6 +16,7 @@ namespace ExerciseApp2.Exercises
         }
     }
 
+    [Description("Count and Remove spaces")]
     class Exercise2A2 : IExercise
     {
         public void Run()

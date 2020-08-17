@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading;
 
 namespace ExerciseApp2.Exercises
 {
+    [Description("Animals Exercise")]
     class Exercise2B2 : IExercise
     {
         internal class Animal
